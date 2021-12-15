@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Page 4</title>
+    <link rel="stylesheet" th:href="@{nicepage.css}" media="screen">
+    <link rel="stylesheet" th:href="@{Page-4.css}" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 4.1.7, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+
+
+
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": ""
+    }</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Page 4">
+    <meta property="og:type" content="website">
+</head>
+<body class="u-body">
+<section class="u-align-center u-clearfix u-image u-parallax u-shading u-section-1" id="sec-99c1" data-image-width="1280" data-image-height="852">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-align-center-sm u-align-center-xs u-border-10 u-border-palette-1-base u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-group-1">
+            <div class="u-container-layout u-valign-top u-container-layout-1">
+                <h3 class="u-align-center-lg u-align-center-md u-align-center-xl u-text u-text-default u-text-1">Contact Form</h3>
+                <p class="u-align-center-lg u-align-center-md u-align-center-xl u-text u-text-default u-text-2">Please fill in the form below with the accurate information needed as we look towards making you happy.</p>
+                <div class="u-form u-form-1">
+                    <form th:action="@{/user/save_contact/{contactId}(contactId =${command.contactId})}" th:objection="${command}" method="POST" class="u-clearfix u-form-spacing-20 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form">
+                        <input type="hidden" id="siteId" name="siteId" value="1113517">
+                        <input type="hidden" id="pageId" name="pageId" value="1121745">
+                        <div class="u-form-group u-form-name">
+                            <label for="name-a97b" class="u-form-control-hidden u-label">Name</label>
+                            <input type="text" placeholder="Enter your Name" id="name-a97b" name="name" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                        </div>
+                        <div class="u-form-email u-form-group">
+                            <label for="email-a97b" class="u-form-control-hidden u-label">Email</label>
+                            <input type="email" placeholder="Enter a valid email address" id="email-a97b" name="email" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                        </div>
+                        <div class="u-form-group u-form-phone u-form-group-3">
+                            <label for="phone-8019" class="u-form-control-hidden u-label"></label>
+                            <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your phone (e.g. +14155552675)" id="phone-8019" name="phone" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                        </div>
+                        <div class="u-form-address u-form-group u-form-group-4">
+                            <label for="address-4342" class="u-form-control-hidden u-label"></label>
+                            <input type="text" placeholder="Enter your address" id="address-4342" name="address" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                        </div>
+                        <div class="u-form-date u-form-group u-form-group-5">
+                            <label for="date-1e15" class="u-form-control-hidden u-label"></label>
+                            <input type="date" placeholder="MM/DD/YYYY" id="date-1e15" name="date" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                        </div>
+                        <div class="u-form-group u-form-message u-form-group-6">
+                            <label for="message-eb48" class="u-label">Remarks</label>
+                            <textarea placeholder="Enter your message" rows="4" cols="50" id="message-eb48" name="remark" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required=""></textarea>
+                        </div>
+                        <div class="u-align-center u-form-group u-form-submit">
+                            <a href="#" class="u-btn u-btn-submit u-button-style">Submit</a>
+                            <input type="submit" value="submit" class="u-form-control-hidden">
+                        </div>
+<!--                        <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>-->
+<!--                        <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>-->
+                        <input type="hidden" value="" name="recaptchaResponse">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<section class="u-backlink u-clearfix u-grey-80">
+    <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+    </a>
+    <p class="u-text">
+        <span>created with</span>
+    </p>
+    <a class="u-link" href="" target="_blank">
+        <span>Website Builder Software</span>
+    </a>.
+</section>
+</body>
+</html>
