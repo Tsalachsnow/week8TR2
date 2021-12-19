@@ -33,25 +33,25 @@
                 <h3 class="u-align-center-lg u-align-center-md u-align-center-xl u-text u-text-default u-text-1">Contact Form</h3>
                 <p class="u-align-center-lg u-align-center-md u-align-center-xl u-text u-text-default u-text-2">Please fill in the form below with the accurate information needed as we look towards making you happy.</p>
                 <div class="u-form u-form-1">
-<!--                    (contactId =${command.contactId})}-->
-                    <form th:action="@{/user/save_contact}" th:object="${command}" method="POST" class="u-clearfix u-form-spacing-20 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form">
+                    <!--                    (contactId =${command.contactId})}-->
+                    <form th:action="@{/user/save_contact/{id}(id =${command.getContactId()})}" th:object="${command}" method="POST" class="u-clearfix u-form-spacing-20 u-form-vertical u-inner-form" style="padding: 10px" source="email" name="form">
                         <input type="hidden" id="siteId" name="siteId" value="1113517">
                         <input type="hidden" id="pageId" name="pageId" value="1121745">
                         <div class="u-form-group u-form-name">
                             <label for="name-a97b" class="u-form-control-hidden u-label">Name</label>
-                            <input type="text" placeholder="Enter your Name" id="name-a97b" name="name" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                            <input type="text" placeholder="Enter your Name" th:field="*{name}" id="name-a97b" name="name" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
                         </div>
                         <div class="u-form-email u-form-group">
                             <label for="email-a97b" class="u-form-control-hidden u-label">Email</label>
-                            <input type="email" placeholder="Enter a valid email address" id="email-a97b" name="email" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                            <input type="email" placeholder="Enter a valid email address" th:field="*{email}" id="email-a97b" name="email" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
                         </div>
                         <div class="u-form-group u-form-phone u-form-group-3">
                             <label for="phone-8019" class="u-form-control-hidden u-label"></label>
-                            <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your phone (e.g. +14155552675)" id="phone-8019" name="phone" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                            <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" th:field="*{phone}" placeholder="Enter your phone (e.g. +14155552675)" id="phone-8019" name="phone" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
                         </div>
                         <div class="u-form-address u-form-group u-form-group-4">
                             <label for="address-4342" class="u-form-control-hidden u-label"></label>
-                            <input type="text" placeholder="Enter your address" id="address-4342" name="address" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                            <input type="text" placeholder="Enter your address" id="address-4342" th:field="*{address}" name="address" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
                         </div>
                         <div class="u-form-date u-form-group u-form-group-5">
                             <label for="date-1e15" class="u-form-control-hidden u-label"></label>
@@ -59,14 +59,14 @@
                         </div>
                         <div class="u-form-group u-form-message u-form-group-6">
                             <label for="message-eb48" class="u-label">Remarks</label>
-                            <textarea placeholder="Enter your message" rows="4" cols="50" id="message-eb48" name="remark" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required=""></textarea>
+                            <textarea placeholder="Enter your message" rows="4" cols="50" id="message-eb48" th:field="*{remark}" name="remark" class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required=""></textarea>
                         </div>
                         <div class="u-align-center u-form-group u-form-submit">
                             <a href="#" class="u-btn u-btn-submit u-button-style">Submit</a>
                             <input type="submit" value="submit" class="u-form-control-hidden">
                         </div>
-<!--                        <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>-->
-<!--                        <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>-->
+                        <!--                        <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>-->
+                        <!--                        <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>-->
                         <input type="hidden" value="" name="recaptchaResponse">
                     </form>
                 </div>

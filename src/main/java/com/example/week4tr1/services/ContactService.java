@@ -2,13 +2,8 @@ package com.example.week4tr1.services;
 
 import com.example.week4tr1.model.Contact;
 import com.example.week4tr1.model.UserInfo;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface ContactService {
@@ -36,18 +31,34 @@ public interface ContactService {
 
     void save(Contact c);
 
-    void update(Contact c);
+//    void update(Contact c);
 
-     void delete(Contact cotactId);
+//     void delete(Contact cotactId);
 
-    void deleteAll(Contact cotactIds);
+    void deleteContact(Long contactId);
+
+    void deleteAll();
 
     List<Contact> findUserContact(Long userId);
 
 
-    List<Contact> findUserContact(Long userId, String txt);
+//    List<Contact> findUserContact1(Long userId, String txt);
+
+//    List<Contact> findUserContact1(Long contactId, String txt);
+
+    List<Contact> findContactsByNameContains(String freeText);
+
+    List<Contact> findd(String text);
+
+//    List<Contact> findUserContact1(Long contactId, String txt);
 
     Contact findById(Long cotactId);
+
+    List<Contact> findAll(Long userId, String freeText);
+
+    List<Contact> searchText(String txt);
+
+    List<Contact> searchPhone(String txt);
 }
 
 

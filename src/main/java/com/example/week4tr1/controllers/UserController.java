@@ -2,11 +2,11 @@ package com.example.week4tr1.controllers;
 
 import com.example.week4tr1.exception.UserBlockedException;
 import com.example.week4tr1.model.UserInfo;
+import com.example.week4tr1.services.ContactService;
 import com.example.week4tr1.services.UserService;
 import com.example.week4tr1.services.serviceImplementation.ContactServiceImpl;
 import com.example.week4tr1.services.serviceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,11 +60,11 @@ public class UserController {
         } else if (Objects.equals(userVal.getRole(), UserService.ROLE_ADMIN)) {
             //add user detail in session (assign session to logged in user)
             addUserInSession(userVal, session);
-            return "admin/dashboard";
+            return "dashboard_admin";
         } else if (Objects.equals(userVal.getRole(), UserService.ROLE_USER)) {
             //add user detail in session (assign session to logged in user)
             addUserInSession(userVal, session);
-            return "user/dashboard";
+            return "dashboard_user";
         } else {
             //add error message and go back to login-form
             m.addAttribute("err", "Invalid User ROLE");
@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/dashboard")
-    public String userDashboard() {
+    public String userDashboard(){
         return "dashboard_user"; //JSP
     }
 
@@ -89,10 +89,11 @@ public class UserController {
         return "dashboard_admin"; //JSP
     }
 
-    @GetMapping(value = "/admin/users")
+    @GetMapping(value = "/admin/ulist")
     public String getUserList(Model m) {
         m.addAttribute("userList", userService.getUserList());
-        return "users"; //JSP
+        System.out.println("===============");
+        return "admin/ulist"; //JSP
     }
 
     @GetMapping(value = "/reg_form")
@@ -120,18 +121,23 @@ public class UserController {
         return "reg_form";//JSP
     }
 
+//    @GetMapping("/admin/ulist")
+//    public String getDashboard1(Model m) {
+//        m.addAttribute("userList", userService.getUserList());
+//        return "admin/ulist";
+//    }
 
-    @PostMapping(value = "/admin/change_status")
+
+    @GetMapping(value = "/admin/change_status/{id}")
     @ResponseBody
-    public String changeLoginStatus(@RequestParam Long id, @RequestParam Integer loginStatus) {
-        try {
+    public String changeLoginStatus(@RequestParam Integer loginStatus, Long id) {
+           userService.changeStatus(loginStatus);
             userService.changeLoginStatus(id, loginStatus);
-            return "SUCCESS: Status Changed";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "ERROR: Unable to Change Status";
+            return "admin/ulist";
         }
-    }
+//            return "ERROR: Unable to Change Status";
+
+
 
         @GetMapping(value = "/check_avail")
         @ResponseBody
@@ -142,6 +148,25 @@ public class UserController {
                 return "Yes! You can take this";
             }
         }
+
+    @RequestMapping(value = "/admin/del_user/{id}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+        UserInfo person = (UserInfo) session.getAttribute("person");
+
+
+//        Long contactId = Long.parseLong(request.getParameter("contactId"));
+
+        userService.deleteUser(id);
+        session.setAttribute("message", "contact deleted successfully");
+        return "redirect:/admin/ulist";
+    }
+
+    @GetMapping(value = "/admin/bulk_udelete")
+    public String deleteBulkContact() {
+        contactService.deleteAll();
+        return "admin/ulist";
+    }
 
     }
 

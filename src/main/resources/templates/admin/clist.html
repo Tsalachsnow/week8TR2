@@ -13,8 +13,8 @@
 <body>
 <div align="center">
     <h1 style="color: white">Contact List</h1>
-<!--    <a th:href = "@{/createStaff}" class="btn btn-primary btn-sm mb-3" style="background-color: #c6cf5c; color: black"> Add Employee </a>-->
-    <table border="1" class="table table-striped table-responsive-md" style="color: navajowhite">
+    <!--    <a th:href = "@{/createStaff}" class="btn btn-primary btn-sm mb-3" style="background-color: #c6cf5c; color: black"> Add Employee </a>-->
+    <table border="1" class="table table-striped table-responsive-md" style="color: black">
         <thead>
         <tr>
             <th>Name</th>
@@ -22,9 +22,9 @@
             <th>Email</th>
             <th>Address</th>
             <th>Remark</th>
-<!--            <th>Email</th>-->
-<!--            <th>Address</th>-->
-<!--            <th>Action</th>-->
+            <!--            <th>Email</th>-->
+            <!--            <th>Address</th>-->
+            <!--            <th>Action</th>-->
         </tr>
         </thead>
         <tbody>
@@ -34,19 +34,19 @@
             <td th:text="${contact.getEmail()}"></td>
             <td th:text="${contact.getAddress()}"></td>
             <td th:text="${contact.getRemark()}"></td>
-<!--            <td th:text="${staff.getEmail()}"></td>-->
-<!--            <td th:text="${staff.getAddress()}"></td>-->
-            <td> <a th:href="@{/user/save_contact/{contactId}(id=${contact.contactId})}" class="btn btn-primary" style="background-color: #c6cf5c; color: black">Update</a>
-                <a th:href="@{/user/del_contact/{contactId}(id=${contact.contactId})}" class="btn btn-danger" style="background-color: #0d244b">Delete</a>
+            <!--            <td th:text="${staff.getEmail()}"></td>-->
+            <!--            <td th:text="${staff.getAddress()}"></td>-->
+            <td>
+                <a th:href="@{/admin/del_contact/{id}(id=${contact.getContactId()})}" class="btn btn-danger" style="background-color: #0d244b">Delete</a>
             </td>
         </tr>
         </tbody>
         <td>
-            <a th:href="@{/user/bulk_cdelete/{contactIds}}" class="btn btn-danger" style="background-color: #0d244b">Delete All</a>
+            <a th:href="@{/admin/bulk_cdelete}" class="btn btn-danger" style="background-color: #0d244b">Delete All</a>
         </td>
     </table>
     <br> <br>
-    <h3 style="color: white; position: center"><a style="color: papayawhip" href="/admin/dashboard">Home</a></h3>
+    <h3 style="color: white; position: center"><a style="color: black" href="/admin/dashboard">Home</a></h3>
 </div>
 </body>
 </html>

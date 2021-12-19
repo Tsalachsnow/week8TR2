@@ -52,13 +52,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public Object getUserList() {
+    public List<UserInfo> getUserList() {
 
         return userRepository.findAll();
+    }
+    @Override
+    public void deleteUser(Long userId){
+        userRepository.deleteById(userId);
     }
 
     public void changeLoginStatus(Long id, Integer loginStatus) {
 //        UserInfo user =  userRepository.findByIdAndLoginStatus(id, loginStatus);
+
         UserInfo user = userRepository.findByIdAndLoginStatus(id, loginStatus);
         user.setId(id);
         user.setLoginStatus(loginStatus);
@@ -74,6 +79,15 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByLoginName(username)) return true;
         else{
             return false;
+        }
+    }
+
+    @Override
+    public void changeStatus(int id) {
+        if(id == 1) {
+            id = 2;
+        } else {
+            id = 1;
         }
     }
 }

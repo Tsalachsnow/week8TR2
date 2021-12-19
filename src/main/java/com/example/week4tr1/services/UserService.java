@@ -19,10 +19,13 @@ public interface UserService {
 
     void delete(Long Id);
 
-//    UserInfo login(String loginName, String password) throws UserBlockedException;
+
+    void deleteUser(Long id);
+    void changeStatus(int id);
+    //    UserInfo login(String loginName, String password) throws UserBlockedException;
 //
 //
-//    public List<UserInfo> getUserList();
+    public List<UserInfo> getUserList();
 //
 //
 //    public void changeLoginStatus(Integer userId, Integer loginStatus);
@@ -33,5 +36,8 @@ public interface UserService {
     UserInfo getUserByEmail(String email);
 
 
+//    UserInfo getUserList();
+
+    void changeLoginStatus(Long id, Integer loginStatus);
 }
 

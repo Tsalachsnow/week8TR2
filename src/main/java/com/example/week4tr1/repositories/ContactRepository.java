@@ -24,17 +24,42 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 //    @Modifying
 //    @Query()
 //    List<Contact> findAll();
+//@Modifying
+//@Query("SELECT c FROM Contact c WHERE " +
+//        "lower(c.name) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//        "lower(c.phone) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//        "lower(c.email) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//        "lower(c.address) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//        "lower(c.remark) LIKE lower(CONCAT('%', :txt, '%'))")
+    List<Contact> findContactsByNameContains(String freeText);
 
+    List<Contact> findContactsByPhoneContains(String freeText);
+
+//    @Modifying
+//    @Query(value = "SELECT c FROM Contact c WHERE " +
+//            "lower(c.name) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//            "lower(c.phone) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//            "lower(c.email) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//            "lower(c.address) LIKE lower(CONCAT('%', :txt, '%')) OR " +
+//            "lower(c.remark) LIKE lower(CONCAT('%', :txt, '%'))", nativeQuery = true)
+//    List<Contact> findUserContact1(@Param("txt") String txt);
     @Modifying
-    @Query("SELECT c FROM Contact c WHERE " +
+    @Query(value = "SELECT c FROM Contact c WHERE " +
             "lower(c.name) LIKE lower(CONCAT('%', :txt, '%')) OR " +
             "lower(c.phone) LIKE lower(CONCAT('%', :txt, '%')) OR " +
             "lower(c.email) LIKE lower(CONCAT('%', :txt, '%')) OR " +
             "lower(c.address) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-            "lower(c.remark) LIKE lower(CONCAT('%', :txt, '%'))")
-    List<Contact> findUserContact(@Param("txt") String txt);
+            "lower(c.remark) LIKE lower(CONCAT('%', :txt, '%'))", nativeQuery = true)
+    List<Contact> findContactsByNameOrPhoneOrEmailOrAddressOrRemarkContains(@Param("txt") String txt);
 
-    @Modifying
-    @Query("DELETE FROM Contact WHERE contactId = ?1")
-    void deleteAll(Contact cotactIds);
+//    List<Contact> findContactsByNameContains(String txt);
+
+//    @Modifying
+//    @Query("DELETE * FROM Contact WHERE contactId = ?1")
+    void deleteAll();
+
+@Query("DELETE FROM Contact WHERE contactId = ?1")
+    Contact findContactByContactIdAndUserId(Long contactId, Long userId);
+
+//    List<Contact> findAll(Long userId, String freeText);
 }

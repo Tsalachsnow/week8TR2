@@ -12,11 +12,12 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "contact")
 public class Contact {
     @Id
     @SequenceGenerator(name = "contact_sequence", sequenceName = "contact_sequence", allocationSize = 1)
     @GeneratedValue(strategy  = SEQUENCE, generator = "contact_sequence")
-    @Column(name = "contact")
+    @Column(name = "contactId")
     private Long contactId;
 
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(50)")
