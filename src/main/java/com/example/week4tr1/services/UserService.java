@@ -7,8 +7,8 @@ import java.util.List;
 
 
 public interface UserService {
-    Integer LOGIN_STATUS_ACTIVE=1;
-    Integer LOGIN_STATUS_BLOCKED=2;
+    Integer LOGIN_STATUS_ACTIVE = 1;
+    Integer LOGIN_STATUS_BLOCKED = 2;
 
     Integer ROLE_ADMIN=1;
     Integer ROLE_USER=2;
@@ -18,10 +18,10 @@ public interface UserService {
     void delete(UserInfo user);
 
     void delete(Long Id);
-
+     void addLogin(UserInfo loginStatus);
 
     void deleteUser(Long id);
-    void changeStatus(int id);
+//    void changeStatus(int id);
     //    UserInfo login(String loginName, String password) throws UserBlockedException;
 //
 //
@@ -38,6 +38,6 @@ public interface UserService {
 
 //    UserInfo getUserList();
 
-    void changeLoginStatus(Long id, Integer loginStatus);
+    UserInfo changeLoginStatus(UserInfo loginStatus);
 }
 

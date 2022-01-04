@@ -37,9 +37,11 @@
             <td th:text="${user.getRole()}"></td>
             <td th:text="${user.getLoginStatus()}"></td>
             <td>
-<!--                <a th:href="@{/admin/change_status/{id}(id=${user.getId()})}"-->
-<!--                   class="btn btn-primary" style="background-color: #c6cf5c; color: black">ON/OFF</a>-->
-                <a th:href="@{/admin/del_user/{id}(id=${user.getId()})}" class="btn btn-danger" style="background-color: #0d244b">Delete</a>
+                <a th:href="@{/admin/change_status/{id}(id = ${user.getId()})}"
+                   class="btn btn-primary" style="background-color: #c6cf5c; color: black">ON/OFF</a>
+                <a th:href="@{/admin/clist/{userId}(userId = ${user.getId()})}"
+                   class="btn btn-primary" style="background-color: #0d244b; color: antiquewhite">Contacts</a>
+                <a th:href="@{/admin/del_user/{id}(id=${user.getId()})}" class="btn btn-danger" style="background-color: darkred; color:black">Delete</a>
             </td>
         </tr>
         </tbody>

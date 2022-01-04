@@ -74,34 +74,32 @@
                         </div>
                         <p class="u-align-left u-text u-text-custom-color-1 u-text-2">&nbsp; Hello <br>&nbsp; I’m a Decadev
                         </p>
-                        <p class="u-align-left u-custom-font u-text u-text-custom-color-1 u-text-3">&nbsp;Join us as we expand our&nbsp; &nbsp; &nbsp; &nbsp;network</p>
+                        <p class="u-align-left u-custom-font u-text u-text-custom-color-1 u-text-3">&nbsp;Join us as we expand our network</p>
                         <div class="u-image u-image-circle u-image-1" alt="" data-image-width="1080" data-image-height="1080"></div>
                         <a th:href="@{/user/contact_form}" class="u-active-grey-25 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-dialog-link u-hover-grey-25 u-radius-8 u-text-active-black u-text-body-color u-text-hover-black u-btn-1">CREATE CONTACT&nbsp;<span class="u-icon u-icon-2"><svg class="u-svg-content" viewBox="0 0 96 96" style="width: 1em; height: 1em;"><path d="M44,12v62.344L22.543,52.888c-1.561-1.562-4.094-1.562-5.656-0.001c-1.562,1.562-1.562,4.096,0,5.658l28.284,28.283l0,0  c0.186,0.186,0.391,0.352,0.609,0.498c0.101,0.067,0.21,0.114,0.315,0.172c0.124,0.066,0.242,0.142,0.373,0.195  c0.135,0.057,0.275,0.089,0.415,0.129c0.111,0.033,0.216,0.076,0.331,0.099C47.474,87.973,47.737,88,48,88l0,0  c0.003,0,0.006-0.001,0.009-0.001c0.259-0.001,0.519-0.027,0.774-0.078c0.12-0.024,0.231-0.069,0.348-0.104  c0.133-0.039,0.268-0.069,0.397-0.123c0.139-0.058,0.265-0.136,0.396-0.208c0.098-0.054,0.198-0.097,0.292-0.159  c0.221-0.146,0.427-0.314,0.614-0.501l28.281-28.282c1.562-1.562,1.562-4.095,0.001-5.657c-1.562-1.562-4.095-1.562-5.657,0  L52,74.343V12c0-2.209-1.791-4-4-4S44,9.791,44,12z"></path></svg><img></span>&nbsp;
                         </a>
-                        <a th:href="@{/user/clist}" class="u-active-grey-25 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-dialog-link u-hover-grey-25 u-radius-8 u-text-active-black u-text-body-color u-text-hover-black u-btn-1">CONTACT LIST&nbsp;<span class="u-icon u-icon-2"><svg class="u-svg-content" viewBox="0 0 96 96" style="width: 1em; height: 1em;"></svg><img></span>&nbsp;
-                        </a>
                     </div>
                 </div>
-                <p class="u-align-center u-text u-text-4">if you're concerned about losing contacts of the good tech friends and family you have made so​ far in decagon institute. We offer a safe keep for these contacts you cherish so much.</p>
+                <p class="u-align-center u-text u-text-4">if you're concerned about losing contacts of the good tech friends and family you have made so far in decagon institute. We offer a safe keep for these contacts you cherish so much.</p>
                 <div class="u-form u-form-1">
-                    <form th:action="@{/user/contact_search/{freeText}}"  method="POST" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="email" name="freeText">
-                        <input type="hidden" id="siteId" name="siteId" value="1113517">
-                        <input type="hidden" id="pageId" name="pageId" value="1113766">
+                    <form th:action="@{/contact_search/freeText}" method="GET" class="u-clearfix u-form-spacing-15 u-form-vertical u-inner-form" style="padding: 15px;" source="contactList" name="freeText">
                         <div class="u-form-group u-form-group-1">
-                            <label for="text-0f16" class="u-label">Search name</label>
-                            <input type="text" placeholder="SEARCH CONTACT" id="text-0f16" class="u-border-1 u-border-grey-30 u-input u-input-rectangle">
+                            <label for="text-0f16" class="u-label">Search Contact</label>
+                            Filter:<!--/*@thymesVar id="freeText" type=""*/-->
+                            <input type="text" th:value="${freeText}" name="freeText" placeholder="SEARCH CONTACT" id="text-0f16" class="u-border-1 u-border-grey-30 u-input u-input-rectangle">
                         </div>
                         <div class="u-align-right u-form-group u-form-submit">
-                            <button type="submit" class="u-btn u-btn-submit u-button-style">Submit</button>
+                            <button type="submit" value="Search"class="u-btn u-btn-submit u-button-style">Submit</button>
 <!--                            <input type="submit" value="submit" class="u-form-control-hidden">-->
                         </div>
                         <div class="u-form-send-message u-form-send-success">Thank you! Your message has been sent.</div>
                         <div class="u-form-send-error u-form-send-message">Unable to send your message. Please fix errors then try again.</div>
-                        <input type="hidden" value="" name="recaptchaResponse">
+<!--                        <input type="hidden" value="" name="recaptchaResponse">-->
                     </form>
                 </div>
             </div>
         </div>
+        <div><a th:href="@{/user/clist}" style="margin-bottom: 100%" class="u-active-grey-25 u-border-none u-btn u-btn-round u-radius-8 u-button-style u-custom-color-1 u-dialog-link u-hover-grey-25 u-text-active-black u-text-body-color u-text-hover-black u-btn-1 u-align-right">CONTACT LIST</a></div>
     </div>
 </section>
 <section class="u-align-center u-clearfix u-section-3" id="sec-89a1">

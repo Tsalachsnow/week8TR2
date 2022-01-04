@@ -16,9 +16,9 @@ public interface UserRepository extends JpaRepository<UserInfo, Long> {
 
     List<UserInfo> findAll();
 
-    @Modifying
-    @Query("UPDATE UserInfo SET loginStatus=?1 WHERE id=?1")
-    UserInfo findByIdAndLoginStatus(Long id, Integer loginStatus);
+//    @Modifying
+    @Query("SELECT loginStatus FROM UserInfo WHERE id=?1 AND loginStatus=?1")
+    UserInfo findByIdAndLoginStatus(UserInfo loginStatus);
 
     @Modifying
     @Query("SELECT loginName FROM UserInfo WHERE loginName=?1")

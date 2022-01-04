@@ -10,11 +10,11 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Getter
 @Setter
 @Entity
-@Table(
-        name = "user_info",
+@Table(name = "userInfo",
         uniqueConstraints = {
                 @UniqueConstraint(name = "user_email_constraint", columnNames = "email"),
         }
@@ -53,4 +53,15 @@ public class UserInfo {
     @OneToMany(mappedBy = "userInfo", cascade = CascadeType.REMOVE)
     private List<Contact> contact;
 
+    public UserInfo(Long id, String name, String phone, String email, String address, String loginName, String password, int role, int loginStatus) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.loginName = loginName;
+        this.password = password;
+        this.role = role;
+        this.loginStatus = loginStatus;
+    }
 }

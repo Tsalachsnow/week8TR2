@@ -2,17 +2,15 @@ package com.example.week4tr1.controllers;
 
 import com.example.week4tr1.model.Contact;
 import com.example.week4tr1.model.UserInfo;
-import com.example.week4tr1.services.ContactService;
 import com.example.week4tr1.services.serviceImplementation.ContactServiceImpl;
 import com.example.week4tr1.services.serviceImplementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ContactController {
@@ -26,6 +24,8 @@ public class ContactController {
 
         this.userService = userService;
     }
+
+
 
     @GetMapping(value = "/user/contact_form")
     public String contactForm(Model m) {
@@ -49,16 +49,23 @@ public class ContactController {
 
     @PostMapping(value = "/user/save_contact")
     public String saveOrUpdateContact(@ModelAttribute("command") Contact c, Model m, HttpSession session) {
-        System.out.println("Code reached here");
-        Long contactId = (Long) session.getAttribute("ContactId");
-        if (contactId == null) {
-            //save task
-            System.out.println("Code reached here1");
 
-                Long userId = (Long) session.getAttribute("userId");
-                c.setContactId(userId);//FK ; logged in userId
-                System.out.println("Code reached here2");
-                contactService.save(c);
+        Contact contact = contactService.findContactByEmail(c.getEmail());
+
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        System.out.println(user);
+        if (contact == null) {
+            //save task
+
+            Contact newContact = new Contact();
+            newContact.setName(c.getName());
+            newContact.setEmail(c.getEmail());
+            newContact.setPhone(c.getPhone());
+            newContact.setRemark(c.getRemark());
+            newContact.setAddress(c.getAddress());
+            newContact.setUserInfo(user);
+
+                contactService.save(newContact);
                 m.addAttribute("Success1", "contact successfully added");
                 return "redirect:/userDash";}//redirect user to contact list url
 
@@ -89,52 +96,60 @@ public class ContactController {
         return "/edit";
     }
 
-    @GetMapping(value = "/admin/clist")
-    public String contactList(Model m, HttpSession session) {
-        Long userId = (Long)session.getAttribute("userId");
-        m.addAttribute("contactList", contactService.findUserContact(userId));
-        return "admin/clist"; //JSP
-    }
-
-    @PostMapping(value = "/user/contact_search/{freeText}")
-    public String contactSearch(Model m, HttpSession session, @PathVariable String freeText) {
-        Long contactId = (Long) session.getAttribute("contactId");
-        m.addAttribute("freeText", freeText);
+    @GetMapping(value = "/admin/clist/{userId}")
+    public String contactList(@PathVariable("userId") Long userId1, Model m, HttpSession session) {
         Contact contact = new Contact();
-            m.addAttribute("contact", contact);
-        m.addAttribute("contactList", contactService.findContactsByNameContains(freeText));
 
-        System.out.println("Returned results: " + contactService.findContactsByNameContains(freeText));
-        return "user/slist"; //JSP
-//        String regex = "0";
-//
-//        try{
-//            long x = Long.parseLong(freeText);
-//            m.addAttribute("contactList", contactService.searchPhone(Long.toString(x)));
-//        }catch(NumberFormatException n){
-//            m.addAttribute("contactList", contactService.searchText(freeText));
-//        }
-////        m.addAttribute("contactList", contactService.findUserContact1(contactId, freeText));
-//
-//        return "user/clist"; //JSP
+            m.addAttribute("contactList", contactService.findUserContact());
+            m.addAttribute("contact", contact);
+            m.addAttribute("userId", userId1);
+            return "admin/clist"; //JSP
+
     }
 
-//    @RequestParam("cid") Contact contactId,
-    @RequestMapping(value = "/admin/del_contact/{id}", method = RequestMethod.GET)
-    public String deleteContact(@PathVariable("id") Long id,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    @GetMapping(value = "/user/clist")
+    public String cotactList1(Model m, HttpSession session) {
+        Long id = (Long)session.getAttribute("id");
+        m.addAttribute("contactList1", contactService.findUserContact());
+        return "user/clist"; //JSP
+    }
 
-        UserInfo person = (UserInfo) session.getAttribute("person");
+    @GetMapping(value = "/user/slist{id}")
+    public String contactList1(@PathVariable("id") Model m, HttpSession session) {;
+        UserInfo user = (UserInfo) session.getAttribute("user");
+        String freeText = (String)session.getAttribute("freeText");
+        m.addAttribute("contactList1", contactService.findd(freeText));
+        return "user/slist"; //JSP
+    }
 
+    @GetMapping("/contact_search/freeText")
+    public String contactSearch(Model model, @RequestParam(value = "freeText") String freeText) {
+        List<Contact> listContact = contactService.findd(freeText);
+        model.addAttribute("listContact", listContact);
+            model.addAttribute("freeText", freeText);
 
-//        Long contactId = Long.parseLong(request.getParameter("contactId"));
+        return "user/slist";
+    }
 
-        contactService.deleteContact(id);
-            session.setAttribute("message", "contact deleted successfully");
+    @GetMapping(value = "/user/del_contact/{id}")
+    public String deleteContact1(@PathVariable("id") Long id,HttpSession session) {
+
+////        UserInfo person = (UserInfo) session.getAttribute("person");
+//        if(person.getLoginName().equalsIgnoreCase(user1.getLoginName()))
+            contactService.deleteContact(id);
+        session.setAttribute("message", "contact deleted successfully");
         return "redirect:/user/clist";
     }
 
-    @RequestMapping(value = "/user/del_contact", method = RequestMethod.GET)
-    public String deleteContact1(@PathVariable("id") Long id,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+    @GetMapping(value = "/user/bulk_cdelete")
+    public String deleteBulkContact() {
+        contactService.deleteAll();
+        return "redirect:/user/clist";
+    }
+
+    @DeleteMapping(value = "/admin/del_contact/{id}")
+    public String deleteContact(@PathVariable("id") Long id,HttpSession session) {
 
         UserInfo person = (UserInfo) session.getAttribute("person");
 
@@ -143,16 +158,10 @@ public class ContactController {
 
         contactService.deleteContact(id);
         session.setAttribute("message", "contact deleted successfully");
-        return "user/clist";
+        return "redirect:/admin/clist";
     }
 
-    @GetMapping(value = "/user/bulk_cdelete")
-    public String deleteBulkContact() {
-        contactService.deleteAll();
-        return "user/clist";
-    }
-
-    @GetMapping(value = "/admin/bulk_cdelete")
+    @DeleteMapping(value = "/admin/bulk_cdelete")
     public String deleteBulkContact1() {
         System.out.println("got here");
         contactService.deleteAll();

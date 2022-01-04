@@ -5,7 +5,6 @@ import com.example.week4tr1.repositories.UserRepository;
 import com.example.week4tr1.services.UserService;
 import com.example.week4tr1.utils.PasswordHashing;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,13 +60,15 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId);
     }
 
-    public void changeLoginStatus(Long id, Integer loginStatus) {
-//        UserInfo user =  userRepository.findByIdAndLoginStatus(id, loginStatus);
-
-        UserInfo user = userRepository.findByIdAndLoginStatus(id, loginStatus);
-        user.setId(id);
-        user.setLoginStatus(loginStatus);
+    public UserInfo changeLoginStatus(UserInfo loginStatus) {
+        UserInfo user = userRepository.findByIdAndLoginStatus(loginStatus);
+        if(loginStatus != null && loginStatus.equals(LOGIN_STATUS_ACTIVE))
+            user.setLoginStatus(LOGIN_STATUS_BLOCKED);
+        if(loginStatus != null && loginStatus.equals(LOGIN_STATUS_BLOCKED))
+        user.setLoginStatus(LOGIN_STATUS_ACTIVE);
         userRepository.save(user);
+
+        return user;
     }
 
     public UserInfo getUserById(Long userId) {
@@ -76,18 +77,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isUsernameExist(String username) {
-        if (userRepository.findByLoginName(username)) return true;
-        else{
+        if (userRepository.findByLoginName(username)){
+            return true;
+        } else{
             return false;
         }
     }
 
-    @Override
-    public void changeStatus(int id) {
-        if(id == 1) {
-            id = 2;
-        } else {
-            id = 1;
-        }
+    public void addLogin(UserInfo loginStatus) {
+        userRepository.save(loginStatus);
     }
+
+
+//    @Override
+//    public void changeStatus(int loginStat) {
+//        int loginStatus = 0;
+//        if(loginStat == 1) {
+//            loginStatus = 2;
+//        } else {
+//            loginStatus = 1;
+//        }
+//    }
 }

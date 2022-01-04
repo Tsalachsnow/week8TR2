@@ -14,45 +14,17 @@ import java.util.Optional;
 public interface ContactRepository extends JpaRepository<Contact, Long> {
      Optional<Contact> findById(Long contactId);
 
+
+
      List<Contact> findAll();
 
     @Modifying
     @Query("UPDATE Contact n SET n.name = ?1, n.phone = ?1, n.email = ?1, n.address = ?1, n.remark = ?1 WHERE n.contactId = ?2")
      void update(Contact c);
 
+    @Query("SELECT c FROM Contact c WHERE CONCAT(c.name, c.phone, c.email, c.address, c.remark) LIKE %?1%")
+    List<Contact> findContactsByNameOrPhoneOrEmailOrAddressOrRemark(String freeText);
 
-//    @Modifying
-//    @Query()
-//    List<Contact> findAll();
-//@Modifying
-//@Query("SELECT c FROM Contact c WHERE " +
-//        "lower(c.name) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//        "lower(c.phone) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//        "lower(c.email) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//        "lower(c.address) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//        "lower(c.remark) LIKE lower(CONCAT('%', :txt, '%'))")
-    List<Contact> findContactsByNameContains(String freeText);
-
-    List<Contact> findContactsByPhoneContains(String freeText);
-
-//    @Modifying
-//    @Query(value = "SELECT c FROM Contact c WHERE " +
-//            "lower(c.name) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//            "lower(c.phone) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//            "lower(c.email) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//            "lower(c.address) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-//            "lower(c.remark) LIKE lower(CONCAT('%', :txt, '%'))", nativeQuery = true)
-//    List<Contact> findUserContact1(@Param("txt") String txt);
-    @Modifying
-    @Query(value = "SELECT c FROM Contact c WHERE " +
-            "lower(c.name) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-            "lower(c.phone) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-            "lower(c.email) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-            "lower(c.address) LIKE lower(CONCAT('%', :txt, '%')) OR " +
-            "lower(c.remark) LIKE lower(CONCAT('%', :txt, '%'))", nativeQuery = true)
-    List<Contact> findContactsByNameOrPhoneOrEmailOrAddressOrRemarkContains(@Param("txt") String txt);
-
-//    List<Contact> findContactsByNameContains(String txt);
 
 //    @Modifying
 //    @Query("DELETE * FROM Contact WHERE contactId = ?1")
@@ -61,5 +33,5 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
 @Query("DELETE FROM Contact WHERE contactId = ?1")
     Contact findContactByContactIdAndUserId(Long contactId, Long userId);
 
-//    List<Contact> findAll(Long userId, String freeText);
+    Optional<Contact> findByEmail(String email);
 }

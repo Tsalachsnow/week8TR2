@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="contact : ${contactList}">
+        <tr th:each="contact : ${listContact}">
             <td th:text="${contact.getName()}"></td>
             <td th:text="${contact.getPhone()}"></td>
             <td th:text="${contact.getEmail()}"></td>
@@ -36,7 +36,7 @@
             <td th:text="${contact.getRemark()}"></td>
             <td> <a th:href="@{/user/save_contact/{contactId}(contactId=${contact.getContactId()})}"
                     class="btn btn-primary" style="background-color: #c6cf5c; color: black">Update</a>
-                <a th:href="@{/user/del_contact}" class="btn btn-danger" style="background-color: #0d244b">Delete</a>
+                <a th:href="@{/user/del_contact/{id}(id=${contact.getContactId()})}" class="btn btn-danger" style="background-color: #0d244b">Delete</a>
             </td>
         </tr>
         </tbody>
@@ -45,7 +45,7 @@
         </td>
     </table>
     <br> <br>
-    <h3 style="color: white; position: center"><a style="color: black" href="/admin/dashboard">Home</a></h3>
+    <h3 style="color: white; position: center"><a style="color: black" href="/dashboard_user">Home</a></h3>
 </div>
 </body>
 </html>

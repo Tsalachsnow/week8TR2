@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="contact : ${contactList}">
+        <tr th:each="contact : ${contactList1}">
             <td th:text="${contact.getName()}"></td>
             <td th:text="${contact.getPhone()}"></td>
             <td th:text="${contact.getEmail()}"></td>
@@ -47,7 +47,7 @@
         </td>
     </table>
     <br> <br>
-    <h3 style="color: white; position: center"><a style="color: papayawhip" href="/admin/dashboard">Home</a></h3>
+    <h3 style="color: white; position: center"><a style="color: black" href="/admin/dashboard">Home</a></h3>
 </div>
 </body>
 </html>

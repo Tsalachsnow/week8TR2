@@ -10,7 +10,6 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.SEQUENCE;
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "contact")
 public class Contact {
@@ -39,4 +38,14 @@ public class Contact {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private UserInfo userInfo;
 
+    public Contact(String name, String phone, String email, String address, String remark) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.remark = remark;
+    }
+
+    public Contact() {
+    }
 }

@@ -3,25 +3,31 @@ package com.example.week4tr1.services.serviceImplementation;
 import com.example.week4tr1.model.Contact;
 import com.example.week4tr1.model.UserInfo;
 import com.example.week4tr1.repositories.ContactRepository;
+import com.example.week4tr1.repositories.UserRepository;
 import com.example.week4tr1.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContactServiceImpl implements ContactService {
 
     private ContactRepository contactRepository;
+    private UserRepository userRepository;
+
 
     @Autowired
-    public ContactServiceImpl(ContactRepository contactRepository) {
+    public ContactServiceImpl(ContactRepository contactRepository, UserRepository userRepository) {
         this.contactRepository = contactRepository;
-
+        this.userRepository = userRepository;
     }
+
 
     @Override
     public void save(Contact c) {
+
         contactRepository.save(c);
     }
 
@@ -50,53 +56,32 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> findUserContact(Long contactId) {
+    public List<Contact> findUserContact() {
         return contactRepository.findAll();
     }
-    @Override
-    public List<Contact> findContactsByNameContains(String freeText){
-        return contactRepository.findContactsByNameContains(freeText);
-    }
 
     @Override
-    public List<Contact> findd(String text) {
-        System.err.println(contactRepository.findContactsByNameOrPhoneOrEmailOrAddressOrRemarkContains(text));
-        return contactRepository.findContactsByNameOrPhoneOrEmailOrAddressOrRemarkContains(text);
+    public List<Contact> findd(String freeText) {
+        if (freeText != null) {
+            System.err.println(contactRepository.findContactsByNameOrPhoneOrEmailOrAddressOrRemark(freeText));
+            return contactRepository.findContactsByNameOrPhoneOrEmailOrAddressOrRemark(freeText);
+        }
+        return contactRepository.findAll();
     }
-
-//    @Override
-//    public List<Contact> findUserContact1(Long contactId, String txt) {
-//        System.err.println( contactRepository.findUserContact1(txt));
-//        return contactRepository.findUserContact1(txt);
-//    }
-
-
 
     @Override
     public Contact findById(Long contactId) {
+
         return contactRepository.findById(contactId).orElse(null);
     }
-    @Override
-    public List<Contact> findAll(Long userId, String freeText) {
-        return contactRepository.findAll();
+
+    public Optional<UserInfo> findUserContact1(Long id) {
+       return userRepository.findById(id);
     }
 
-    @Override
-    public List<Contact> searchText(String txt) {
-        return contactRepository.findContactsByNameContains(txt);
+    public Contact findContactByEmail(String email) {
+        return contactRepository.findByEmail(email).orElse(null);
     }
-
-    @Override
-    public List<Contact> searchPhone(String txt) {
-        return contactRepository.findContactsByPhoneContains(txt);
-    }
-
-    public void delete(Contact contactId) {
-    }
-
-
-//    public boolean saveOrUpdateContact1(Long contactId, String name, String email, String address, String phone, String remark) {
-//    }
 }
 
 

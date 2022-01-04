@@ -1,6 +1,7 @@
 package com.example.week4tr1.controllers;
 
 import com.example.week4tr1.exception.UserBlockedException;
+import com.example.week4tr1.model.Contact;
 import com.example.week4tr1.model.UserInfo;
 import com.example.week4tr1.services.ContactService;
 import com.example.week4tr1.services.UserService;
@@ -16,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
+import java.util.Optional;
+
+import static com.example.week4tr1.services.UserService.ROLE_ADMIN;
+import static com.example.week4tr1.services.UserService.ROLE_USER;
 
 @Controller
 public class UserController {
@@ -57,7 +62,7 @@ public class UserController {
         if (Objects.equals(userVal.getLoginStatus(), UserService.LOGIN_STATUS_BLOCKED)) {
             throw new UserBlockedException("Your account has been blocked. Contact to admin.");
 
-        } else if (Objects.equals(userVal.getRole(), UserService.ROLE_ADMIN)) {
+        } else if (Objects.equals(userVal.getRole(), ROLE_ADMIN)) {
             //add user detail in session (assign session to logged in user)
             addUserInSession(userVal, session);
             return "dashboard_admin";
@@ -127,21 +132,46 @@ public class UserController {
 //        return "admin/ulist";
 //    }
 
+//    @GetMapping(value = "/admin/change_status")
+//    @ResponseBody
+//    public String changeLoginStatus1(@ModelAttribute UserInfo userInfo, Model m) {
+////           userService.changeStatus(loginStatus);
+//        UserInfo userdata = userService.getUserById(userInfo.getId());
+//        if (userdata != null)
+//            if (userInfo.getRole() == ROLE_ADMIN)
+//                m.addAttribute("err", "you are the Admin");
+//            if (userInfo.getRole() == ROLE_USER) {
+//                userService.changeLoginStatus(userdata.getId(), userdata.getLoginStatus());
+//                return "admin/ulist";
+//            }
+//            m.addAttribute("err", "Failed to Change status");
+//            return "admin/ulist";
+//
+//        }
 
-    @GetMapping(value = "/admin/change_status/{id}")
-    @ResponseBody
-    public String changeLoginStatus(@RequestParam Integer loginStatus, Long id) {
-           userService.changeStatus(loginStatus);
-            userService.changeLoginStatus(id, loginStatus);
+    @GetMapping("/admin/change_status/{id}")
+    public String changeLoginStatus(Model m, HttpSession session, @PathVariable(value = "id") Long id, @RequestBody UserInfo loginStatus) {
+//        UserInfo user = (UserInfo) session.getAttribute("user");
+        UserInfo existLoginStatus = userService.getUserById(id);
+        if (existLoginStatus.getRole() == ROLE_ADMIN)
+            m.addAttribute("err", "you are the Admin");
+        if (existLoginStatus.getRole() == ROLE_USER){
+            existLoginStatus.setLoginStatus(loginStatus.getLoginStatus());
+            UserInfo updated_loginStatus = userService.changeLoginStatus(existLoginStatus);
+//       userService.changeLoginStatus(Long.parseLong(id), user.getLoginStatus());
             return "admin/ulist";
         }
-//            return "ERROR: Unable to Change Status";
+        m.addAttribute("err", "Failed to Change status");
+        return "admin/ulist";
+    }
+
+//
 
 
 
-        @GetMapping(value = "/check_avail")
+        @GetMapping(value = "/check_avail/username")
         @ResponseBody
-        public String checkAvailability(@RequestParam String username) {
+        public String checkAvailability(@RequestParam(value = "username") String username) {
             if(userService.isUsernameExist(username)){
                 return "This username is already taken. Choose another name";
             }else{

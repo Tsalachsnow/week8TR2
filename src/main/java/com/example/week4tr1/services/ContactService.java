@@ -1,7 +1,6 @@
 package com.example.week4tr1.services;
 
 import com.example.week4tr1.model.Contact;
-import com.example.week4tr1.model.UserInfo;
 
 import java.util.List;
 
@@ -39,26 +38,14 @@ public interface ContactService {
 
     void deleteAll();
 
-    List<Contact> findUserContact(Long userId);
+    List<Contact> findUserContact();
 
 
-//    List<Contact> findUserContact1(Long userId, String txt);
 
-//    List<Contact> findUserContact1(Long contactId, String txt);
-
-    List<Contact> findContactsByNameContains(String freeText);
-
-    List<Contact> findd(String text);
-
-//    List<Contact> findUserContact1(Long contactId, String txt);
+    List<Contact> findd(String freeText);
 
     Contact findById(Long cotactId);
 
-    List<Contact> findAll(Long userId, String freeText);
-
-    List<Contact> searchText(String txt);
-
-    List<Contact> searchPhone(String txt);
 }
 
 
