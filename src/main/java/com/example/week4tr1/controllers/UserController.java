@@ -22,7 +22,7 @@ import java.util.Optional;
 import static com.example.week4tr1.services.UserService.ROLE_ADMIN;
 import static com.example.week4tr1.services.UserService.ROLE_USER;
 
-@Controller
+@RestController
 public class UserController {
 
     private final UserServiceImpl userService;

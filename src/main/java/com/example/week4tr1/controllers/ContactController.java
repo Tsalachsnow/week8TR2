@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class ContactController {
 
    private final ContactServiceImpl contactService;
